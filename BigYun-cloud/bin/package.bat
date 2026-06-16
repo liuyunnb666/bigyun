@@ -1,12 +1,12 @@
 @echo off
 echo.
-echo [信息] 打包Web工程，生成war/jar包文件。
+echo [INFO] Package BigYun Cloud services with dev profile.
 echo.
 
 %~d0
 cd %~dp0
 
 cd ..
-call mvn clean package -Dmaven.test.skip=true
+call mvn clean package -Pdev -Dmaven.test.skip=true
 
 pause

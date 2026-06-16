@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function listProviderModelCatalog(query) {
   return request({
-    url: '/config/model-catalog/list',
+    url: '/provider/model-catalog/list',
     method: 'get',
     params: query
   })
@@ -10,7 +10,7 @@ export function listProviderModelCatalog(query) {
 
 export function getProviderModelCatalog(modelId) {
   return request({
-    url: '/config/model-catalog/detail',
+    url: '/provider/model-catalog/detail',
     method: 'get',
     params: { modelId }
   })
@@ -18,7 +18,7 @@ export function getProviderModelCatalog(modelId) {
 
 export function addProviderModelCatalog(data) {
   return request({
-    url: '/config/model-catalog/add',
+    url: '/provider/model-catalog/add',
     method: 'post',
     data
   })
@@ -26,7 +26,7 @@ export function addProviderModelCatalog(data) {
 
 export function updateProviderModelCatalog(data) {
   return request({
-    url: '/config/model-catalog/edit',
+    url: '/provider/model-catalog/edit',
     method: 'put',
     data
   })
@@ -34,7 +34,7 @@ export function updateProviderModelCatalog(data) {
 
 export function changeProviderModelCatalogStatus(modelId, isEnabled) {
   return request({
-    url: '/config/model-catalog/status',
+    url: '/provider/model-catalog/status',
     method: 'put',
     params: { modelId, isEnabled }
   })
@@ -42,7 +42,7 @@ export function changeProviderModelCatalogStatus(modelId, isEnabled) {
 
 export function delProviderModelCatalog(modelIds) {
   return request({
-    url: '/config/model-catalog/delete',
+    url: '/provider/model-catalog/delete',
     method: 'delete',
     params: { modelIds: Array.isArray(modelIds) ? modelIds.join(',') : modelIds }
   })

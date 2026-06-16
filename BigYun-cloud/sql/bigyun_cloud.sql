@@ -739,6 +739,7 @@ create table sys_provider_config (
   domain           varchar(255)    default '' comment '访问域名',
   base_path        varchar(255)    default '' comment '本地路径或对象前缀',
   ext_params_json  text comment '扩展参数 JSON',
+  model_type       varchar(50)     default null comment '模型类型',
   is_default       char(1)         default 'N' comment '是否默认(Y/N)',
   status           char(1)         default '0' comment '状态(0正常 1停用)',
   create_by        varchar(64)     default '' comment '创建者',
@@ -746,7 +747,8 @@ create table sys_provider_config (
   update_by        varchar(64)     default '' comment '更新者',
   update_time      datetime comment '更新时间',
   remark           varchar(500)    default null comment '备注',
-  primary key (config_id)
+  primary key (config_id),
+  unique key uk_provider_config_type_provider (config_type, provider_code)
 ) engine=innodb auto_increment=1 comment = 'Provider 配置表';
 
 alter table gen_table add column database_name varchar(64) default null comment '数据库名称' after table_id;

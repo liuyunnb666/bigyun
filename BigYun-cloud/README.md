@@ -20,6 +20,14 @@ BigYun Cloud 后端基于 RuoYi-Cloud 二开整理，保留网关、认证、系
 3. 将 `sql/nacos` 下模板导入 Nacos，并在本地替换 MySQL、Redis、OSS、Provider 密钥占位符。
 4. 按需启动 `bigyun-gateway`、`bigyun-auth`、`bigyun-system-service`、`bigyun-config-service`、`bigyun-file-service`、`bigyun-job`、`bigyun-demo`、`bigyun-payment`。
 
+## 独立运行验收
+
+- 仓库模板默认库名保持 `dy-cloud`，不要为了本地验收修改模板。
+- 本地验收建议创建临时库 `dy-cloud-verify`，并在本机 Nacos 中覆盖数据库名。
+- 本机 Nacos namespace 建议使用 `bigyun-cloud-verify`，group 使用 `DEFAULT_GROUP`。
+- 不要使用远程私有 MCP、远程 MySQL 或远程 Nacos 做社区版写入验收。
+- 完整步骤见根目录 `docs/runtime-verification.md`。
+
 ## 编译
 
 ```bash
@@ -31,4 +39,3 @@ mvn clean compile -DskipTests
 - 不提交真实密码、AK/SK、Token、私有 JDBC 地址和公网私有配置。
 - Provider 和 OSS 配置只保留字段结构或示例 endpoint，密钥必须使用占位符。
 - 私有业务模块不进入社区版。
-

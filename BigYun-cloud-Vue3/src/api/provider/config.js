@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function listProviderConfig(query) {
   return request({
-    url: '/config/config/list',
+    url: '/provider/config/list',
     method: 'get',
     params: query
   })
@@ -10,14 +10,14 @@ export function listProviderConfig(query) {
 
 export function getProviderConfig(configId) {
   return request({
-    url: '/config/config/' + configId,
+    url: '/provider/config/' + configId,
     method: 'get'
   })
 }
 
 export function addProviderConfig(data) {
   return request({
-    url: '/config/config',
+    url: '/provider/config',
     method: 'post',
     data
   })
@@ -25,7 +25,7 @@ export function addProviderConfig(data) {
 
 export function updateProviderConfig(data) {
   return request({
-    url: '/config/config',
+    url: '/provider/config',
     method: 'put',
     data
   })
@@ -33,28 +33,28 @@ export function updateProviderConfig(data) {
 
 export function delProviderConfig(configId) {
   return request({
-    url: '/config/config/' + configId,
+    url: '/provider/config/' + configId,
     method: 'delete'
   })
 }
 
 export function changeProviderConfigStatus(configId, status) {
   return request({
-    url: `/config/config/${configId}/status/${status}`,
+    url: `/provider/config/${configId}/status/${status}`,
     method: 'put'
   })
 }
 
 export function setDefaultProviderConfig(configId) {
   return request({
-    url: `/config/config/${configId}/default`,
+    url: `/provider/config/${configId}/default`,
     method: 'put'
   })
 }
 
 export function listProviderCapability(query) {
   return request({
-    url: '/config/config/capability/list',
+    url: '/provider/config/capability/list',
     method: 'get',
     params: query
   })
@@ -62,7 +62,7 @@ export function listProviderCapability(query) {
 
 export function getProviderCapability(capabilityId) {
   return request({
-    url: '/config/config/capability/detail',
+    url: '/provider/config/capability/detail',
     method: 'get',
     params: { capabilityId }
   })
@@ -70,7 +70,7 @@ export function getProviderCapability(capabilityId) {
 
 export function setDefaultProviderCapability(capabilityId) {
   return request({
-    url: '/config/config/capability/default',
+    url: '/provider/config/capability/default',
     method: 'put',
     params: { capabilityId }
   })
@@ -78,7 +78,7 @@ export function setDefaultProviderCapability(capabilityId) {
 
 export function addProviderCapability(data) {
   return request({
-    url: '/config/config/capability/add',
+    url: '/provider/config/capability/add',
     method: 'post',
     data
   })
@@ -86,7 +86,7 @@ export function addProviderCapability(data) {
 
 export function updateProviderCapability(data) {
   return request({
-    url: '/config/config/capability/edit',
+    url: '/provider/config/capability/edit',
     method: 'put',
     data
   })
@@ -94,7 +94,7 @@ export function updateProviderCapability(data) {
 
 export function changeProviderCapabilityStatus(capabilityId, status) {
   return request({
-    url: '/config/config/capability/status',
+    url: '/provider/config/capability/status',
     method: 'put',
     params: { capabilityId, status }
   })
@@ -102,7 +102,7 @@ export function changeProviderCapabilityStatus(capabilityId, status) {
 
 export function delProviderCapability(capabilityIds) {
   return request({
-    url: '/config/config/capability/delete',
+    url: '/provider/config/capability/delete',
     method: 'delete',
     params: { capabilityIds: Array.isArray(capabilityIds) ? capabilityIds.join(',') : capabilityIds }
   })
@@ -110,7 +110,7 @@ export function delProviderCapability(capabilityIds) {
 
 export function listProviderCapabilityLogs(query) {
   return request({
-    url: '/config/config/capability/logs',
+    url: '/provider/config/capability/logs',
     method: 'get',
     params: query
   })
@@ -118,7 +118,7 @@ export function listProviderCapabilityLogs(query) {
 
 export function refreshProviderRuntimeCache(params) {
   return request({
-    url: '/config/config/runtime-cache/refresh',
+    url: '/provider/config/runtime-cache/refresh',
     method: 'post',
     params
   })
@@ -126,7 +126,7 @@ export function refreshProviderRuntimeCache(params) {
 
 export function getProviderRuntimeSnapshot(params) {
   return request({
-    url: '/config/config/runtime-cache/snapshot',
+    url: '/provider/config/runtime-cache/snapshot',
     method: 'get',
     params
   })
@@ -134,7 +134,7 @@ export function getProviderRuntimeSnapshot(params) {
 
 export function listProviderRuntimeSnapshots(params) {
   return request({
-    url: '/config/config/runtime-cache/snapshots',
+    url: '/provider/config/runtime-cache/snapshots',
     method: 'get',
     params
   })

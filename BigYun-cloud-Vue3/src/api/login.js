@@ -55,7 +55,6 @@ export function scanResolve(data) {
   return request({
     url: '/auth/scan/resolve',
     headers: {
-      isToken: false,
       repeatSubmit: false
     },
     method: 'post',
@@ -68,7 +67,6 @@ export function scanConfirm(data) {
   return request({
     url: '/auth/scan/confirm',
     headers: {
-      isToken: false,
       repeatSubmit: false
     },
     method: 'post',

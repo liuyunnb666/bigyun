@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/payment/channel")
+@RequestMapping("/channel")
 public class PaymentChannelConfigController extends BaseController
 {
     private final IPaymentChannelConfigService service;

@@ -23,8 +23,8 @@ ON DUPLICATE KEY UPDATE `item_name` = VALUES(`item_name`), `category` = VALUES(`
 -- Optional menu permissions for RuoYi/BigYun admin UI.
 INSERT INTO sys_menu VALUES (2100, 'Demo管理', 0, 6, 'demo', NULL, '', '', 1, 0, 'M', '0', '0', '', 'example', 'admin', sysdate(), '', NULL, 'Community demo menu')
 ON DUPLICATE KEY UPDATE menu_name = VALUES(menu_name), path = VALUES(path), perms = VALUES(perms);
-INSERT INTO sys_menu VALUES (2101, 'Demo Item', 2100, 1, 'item', 'demo/item/index', '', '', 1, 0, 'C', '0', '0', 'demo:item:list', 'list', 'admin', sysdate(), '', NULL, 'Demo item list')
-ON DUPLICATE KEY UPDATE menu_name = VALUES(menu_name), parent_id = VALUES(parent_id), perms = VALUES(perms);
+INSERT INTO sys_menu VALUES (2101, 'Demo Item', 2100, 1, 'index', 'demo/index', '', '', 1, 0, 'C', '0', '0', 'demo:item:list', 'list', 'admin', sysdate(), '', NULL, 'Demo item list')
+ON DUPLICATE KEY UPDATE menu_name = VALUES(menu_name), parent_id = VALUES(parent_id), path = VALUES(path), component = VALUES(component), perms = VALUES(perms);
 INSERT INTO sys_menu VALUES (2102, 'Demo查询', 2101, 1, '', '', '', '', 1, 0, 'F', '0', '0', 'demo:item:query', '#', 'admin', sysdate(), '', NULL, '')
 ON DUPLICATE KEY UPDATE perms = VALUES(perms);
 INSERT INTO sys_menu VALUES (2103, 'Demo新增', 2101, 2, '', '', '', '', 1, 0, 'F', '0', '0', 'demo:item:add', '#', 'admin', sysdate(), '', NULL, '')

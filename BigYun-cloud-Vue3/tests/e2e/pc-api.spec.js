@@ -56,17 +56,17 @@ test('PC 社区管理端接口通测记录 auth、system、config、provider、p
     },
     {
       name: 'Provider 配置列表',
-      url: '/dev-api/config/config/list?configType=llm',
+      url: '/dev-api/provider/config/list?configType=llm',
       options: { method: 'GET' }
     },
     {
       name: 'Provider 推荐列表',
-      url: '/dev-api/config/config/recommendations?configType=llm',
+      url: '/dev-api/provider/config/recommendations?configType=llm',
       options: { method: 'GET' }
     },
     {
       name: 'Provider 字段',
-      url: '/dev-api/config/config/fields?providerCode=deepseek',
+      url: '/dev-api/provider/config/fields?providerCode=deepseek',
       options: { method: 'GET' }
     },
     {
@@ -76,28 +76,28 @@ test('PC 社区管理端接口通测记录 auth、system、config、provider、p
     },
     {
       name: '支付骨架创建',
-      url: '/dev-api/pay/demo',
+      url: '/dev-api/payment/demo/order',
       options: {
         method: 'POST',
-        body: { orderNo: 'PAY-PC-001', subject: 'BigYun Cloud 社区版测试商品', amount: 1, channel: 'alipay' }
+        body: { orderNo: 'PAY-PC-001', subject: 'BigYun Cloud 社区版测试商品', amount: 1, channelCode: 'alipay' }
       }
     },
     {
       name: '支付骨架查询',
-      url: '/dev-api/pay/demo/PAY-PC-001',
+      url: '/dev-api/payment/demo/PAY-PC-001',
       options: { method: 'GET' }
     },
     {
       name: '示例模块列表',
-      url: '/dev-api/demo/list?pageNum=1&pageSize=10',
+      url: '/dev-api/demo/item/list?pageNum=1&pageSize=10',
       options: { method: 'GET' }
     },
     {
       name: '示例模块保存',
-      url: '/dev-api/demo',
+      url: '/dev-api/demo/item',
       options: {
         method: 'POST',
-        body: { code: 'DEMO-PC-001', name: '社区版示例', status: '0' }
+        body: { itemCode: 'DEMO-PC-001', itemName: '社区版示例', status: '0' }
       }
     },
     {
@@ -169,7 +169,7 @@ async function registerPcRoutes(page) {
     method: 'GET',
     response: buildSuccessResponse([])
   })
-  await routeAndRecord(page, '**/dev-api/config/config/list**', {
+  await routeAndRecord(page, '**/dev-api/provider/config/list**', {
     module: 'config',
     name: 'Provider 配置列表',
     method: 'GET',
@@ -177,7 +177,7 @@ async function registerPcRoutes(page) {
       { configId: 1001, configType: 'llm', providerCode: 'deepseek', providerName: 'DeepSeek', status: '0' }
     ])
   })
-  await routeAndRecord(page, '**/dev-api/config/config/recommendations**', {
+  await routeAndRecord(page, '**/dev-api/provider/config/recommendations**', {
     module: 'config',
     name: 'Provider 推荐列表',
     method: 'GET',
@@ -185,7 +185,7 @@ async function registerPcRoutes(page) {
       { providerCode: 'deepseek', providerName: 'DeepSeek', integrationStatus: 'READY' }
     ])
   })
-  await routeAndRecord(page, '**/dev-api/config/config/fields**', {
+  await routeAndRecord(page, '**/dev-api/provider/config/fields**', {
     module: 'config',
     name: 'Provider 字段',
     method: 'GET',
@@ -199,7 +199,7 @@ async function registerPcRoutes(page) {
     method: 'PUT',
     response: buildSuccessResponse(true)
   })
-  await routeAndRecord(page, '**/dev-api/pay/demo', {
+  await routeAndRecord(page, '**/dev-api/payment/demo/order', {
     module: 'pay',
     name: '支付骨架创建',
     method: 'POST',
@@ -209,28 +209,28 @@ async function registerPcRoutes(page) {
       expect(body.amount).toBeGreaterThan(0)
     }
   })
-  await routeAndRecord(page, '**/dev-api/pay/demo/PAY-PC-001', {
+  await routeAndRecord(page, '**/dev-api/payment/demo/PAY-PC-001', {
     module: 'pay',
     name: '支付骨架查询',
     method: 'GET',
     response: buildSuccessResponse({ orderNo: 'PAY-PC-001', status: 'WAITING' })
   })
-  await routeAndRecord(page, '**/dev-api/demo/list**', {
+  await routeAndRecord(page, '**/dev-api/demo/item/list**', {
     module: 'demo',
     name: '示例模块列表',
     method: 'GET',
     response: buildRowsResponse([
-      { id: 1, code: 'DEMO-PC-001', name: '社区版示例', status: '0', remark: '基础示例数据' }
+      { itemId: 1, itemCode: 'DEMO-PC-001', itemName: '社区版示例', status: '0', remark: '基础示例数据' }
     ])
   })
-  await routeAndRecord(page, '**/dev-api/demo', {
+  await routeAndRecord(page, '**/dev-api/demo/item', {
     module: 'demo',
     name: '示例模块保存',
     method: 'POST',
     response: buildSuccessResponse({ id: 1 }),
     assertBody: async (body) => {
-      expect(body.code).toBeTruthy()
-      expect(body.name).toBeTruthy()
+      expect(body.itemCode).toBeTruthy()
+      expect(body.itemName).toBeTruthy()
     }
   })
   await routeAndRecord(page, '**/dev-api/file/upload', {

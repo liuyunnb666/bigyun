@@ -78,7 +78,10 @@ security:
     whites:
       - /auth/logout
       - /auth/login
+      - /auth/loginNew
       - /auth/register
+      - /auth/scan/create
+      - /auth/scan/status
       - /*/v2/api-docs
       - /*/v3/api-docs
       - /csrf

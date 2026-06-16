@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function listCapabilityCandidates(query) {
   return request({
-    url: '/config/capability/model/candidates',
+    url: '/provider/capability/model/candidates',
     method: 'get',
     params: query
   })
@@ -10,7 +10,7 @@ export function listCapabilityCandidates(query) {
 
 export function listCapabilityRelations(query) {
   return request({
-    url: '/config/capability/model/relations',
+    url: '/provider/capability/model/relations',
     method: 'get',
     params: query
   })
@@ -18,14 +18,14 @@ export function listCapabilityRelations(query) {
 
 export function getCapabilityRelation(relationId) {
   return request({
-    url: '/config/capability/model/relation/' + relationId,
+    url: '/provider/capability/model/relation/' + relationId,
     method: 'get'
   })
 }
 
 export function compareCapabilityModels(params) {
   return request({
-    url: '/config/capability/model/compare',
+    url: '/provider/capability/model/compare',
     method: 'get',
     params
   })
@@ -33,7 +33,7 @@ export function compareCapabilityModels(params) {
 
 export function addCapabilityRelation(data) {
   return request({
-    url: '/config/capability/model/relation',
+    url: '/provider/capability/model/relation',
     method: 'post',
     data
   })
@@ -41,7 +41,7 @@ export function addCapabilityRelation(data) {
 
 export function updateCapabilityRelation(data) {
   return request({
-    url: '/config/capability/model/relation',
+    url: '/provider/capability/model/relation',
     method: 'put',
     data
   })
@@ -49,14 +49,14 @@ export function updateCapabilityRelation(data) {
 
 export function delCapabilityRelation(relationIds) {
   return request({
-    url: '/config/capability/model/relation/' + relationIds,
+    url: '/provider/capability/model/relation/' + relationIds,
     method: 'delete'
   })
 }
 
 export function switchCapabilityDefaultModel(data) {
   return request({
-    url: '/config/capability/model/switch',
+    url: '/provider/capability/model/switch',
     method: 'put',
     data
   })

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/payment/order")
+@RequestMapping("/order")
 public class PaymentOrderController extends BaseController
 {
     private final IPaymentOrderService service;

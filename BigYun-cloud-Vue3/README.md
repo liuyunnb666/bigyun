@@ -18,6 +18,8 @@ npm install
 npm run dev
 ```
 
+运行态验收时，后端建议连接本机临时库 `dy-cloud-verify` 和 Nacos namespace `bigyun-cloud-verify`。确认后端 gateway、auth、system、config、demo、payment 可用后，再使用初始化账号 `admin/admin123` 登录并检查首页、系统管理、Swagger/SpringDoc、Provider 配置中心、支付骨架和 Demo 模块。
+
 ## 生产构建
 
 ```bash
@@ -29,4 +31,3 @@ npm run build:prod
 - 不在前端仓库写入真实密钥、Token、服务器密码和私有业务数据。
 - `src/assets/images/pay.png` 为保留的收款二维码素材，不在社区版抽取中替换。
 - 所有第三方能力密钥只在本地 Nacos 或环境变量中配置。
-

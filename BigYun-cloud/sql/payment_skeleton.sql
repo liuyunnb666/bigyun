@@ -47,25 +47,25 @@ INSERT INTO `payment_channel_config` (`channel_code`, `channel_name`, `app_id`, 
 ('WECHAT', 'WeChat Pay sandbox skeleton', '${WECHAT_APP_ID}', '${WECHAT_APP_SECRET}', '${WECHAT_MERCHANT_ID}', 'http://localhost:8080/payment/notify/wechat', 'http://localhost:8080/payment/return/wechat', '1', 'admin', 'Disabled by default; replace placeholders before use')
 ON DUPLICATE KEY UPDATE channel_name = VALUES(channel_name), app_id = VALUES(app_id), app_secret = VALUES(app_secret), merchant_id = VALUES(merchant_id), status = VALUES(status), remark = VALUES(remark);
 
-INSERT INTO sys_menu VALUES (2200, '支付骨架', 0, 7, 'payment', NULL, '', '', 1, 0, 'M', '0', '0', '', 'money', 'admin', sysdate(), '', NULL, 'Payment skeleton menu')
+INSERT INTO sys_menu VALUES (2200, '支付骨架', 0, 7, 'pay', NULL, '', '', 1, 0, 'M', '0', '0', '', 'money', 'admin', sysdate(), '', NULL, 'Payment skeleton menu')
 ON DUPLICATE KEY UPDATE menu_name = VALUES(menu_name), path = VALUES(path);
-INSERT INTO sys_menu VALUES (2201, '渠道配置', 2200, 1, 'channel', 'payment/channel/index', '', '', 1, 0, 'C', '0', '0', 'payment:channel:list', 'setting', 'admin', sysdate(), '', NULL, 'Payment channel config')
-ON DUPLICATE KEY UPDATE menu_name = VALUES(menu_name), parent_id = VALUES(parent_id), perms = VALUES(perms);
-INSERT INTO sys_menu VALUES (2202, '支付订单', 2200, 2, 'order', 'payment/order/index', '', '', 1, 0, 'C', '0', '0', 'payment:order:list', 'order', 'admin', sysdate(), '', NULL, 'Payment order skeleton')
-ON DUPLICATE KEY UPDATE menu_name = VALUES(menu_name), parent_id = VALUES(parent_id), perms = VALUES(perms);
-INSERT INTO sys_menu VALUES (2203, '渠道查询', 2201, 1, '', '', '', '', 1, 0, 'F', '0', '0', 'payment:channel:query', '#', 'admin', sysdate(), '', NULL, '')
+INSERT INTO sys_menu VALUES (2201, '支付示例', 2200, 1, 'demo', 'pay/demo/index', '', '', 1, 0, 'C', '0', '0', 'pay:order:list', 'money', 'admin', sysdate(), '', NULL, 'Payment skeleton demo')
+ON DUPLICATE KEY UPDATE menu_name = VALUES(menu_name), parent_id = VALUES(parent_id), path = VALUES(path), component = VALUES(component), perms = VALUES(perms);
+INSERT INTO sys_menu VALUES (2202, '支付订单', 2200, 2, 'order', 'pay/demo/index', '', '', 1, 0, 'C', '0', '0', 'pay:order:list', 'order', 'admin', sysdate(), '', NULL, 'Payment order skeleton')
+ON DUPLICATE KEY UPDATE menu_name = VALUES(menu_name), parent_id = VALUES(parent_id), path = VALUES(path), component = VALUES(component), perms = VALUES(perms);
+INSERT INTO sys_menu VALUES (2203, '渠道查询', 2201, 1, '', '', '', '', 1, 0, 'F', '0', '0', 'pay:config:query', '#', 'admin', sysdate(), '', NULL, '')
 ON DUPLICATE KEY UPDATE perms = VALUES(perms);
-INSERT INTO sys_menu VALUES (2204, '渠道新增', 2201, 2, '', '', '', '', 1, 0, 'F', '0', '0', 'payment:channel:add', '#', 'admin', sysdate(), '', NULL, '')
+INSERT INTO sys_menu VALUES (2204, '渠道新增', 2201, 2, '', '', '', '', 1, 0, 'F', '0', '0', 'pay:config:add', '#', 'admin', sysdate(), '', NULL, '')
 ON DUPLICATE KEY UPDATE perms = VALUES(perms);
-INSERT INTO sys_menu VALUES (2205, '渠道修改', 2201, 3, '', '', '', '', 1, 0, 'F', '0', '0', 'payment:channel:edit', '#', 'admin', sysdate(), '', NULL, '')
+INSERT INTO sys_menu VALUES (2205, '渠道修改', 2201, 3, '', '', '', '', 1, 0, 'F', '0', '0', 'pay:config:edit', '#', 'admin', sysdate(), '', NULL, '')
 ON DUPLICATE KEY UPDATE perms = VALUES(perms);
-INSERT INTO sys_menu VALUES (2206, '渠道删除', 2201, 4, '', '', '', '', 1, 0, 'F', '0', '0', 'payment:channel:remove', '#', 'admin', sysdate(), '', NULL, '')
+INSERT INTO sys_menu VALUES (2206, '渠道删除', 2201, 4, '', '', '', '', 1, 0, 'F', '0', '0', 'pay:config:remove', '#', 'admin', sysdate(), '', NULL, '')
 ON DUPLICATE KEY UPDATE perms = VALUES(perms);
-INSERT INTO sys_menu VALUES (2207, '订单查询', 2202, 1, '', '', '', '', 1, 0, 'F', '0', '0', 'payment:order:query', '#', 'admin', sysdate(), '', NULL, '')
+INSERT INTO sys_menu VALUES (2207, '订单查询', 2202, 1, '', '', '', '', 1, 0, 'F', '0', '0', 'pay:order:query', '#', 'admin', sysdate(), '', NULL, '')
 ON DUPLICATE KEY UPDATE perms = VALUES(perms);
-INSERT INTO sys_menu VALUES (2208, '订单新增', 2202, 2, '', '', '', '', 1, 0, 'F', '0', '0', 'payment:order:add', '#', 'admin', sysdate(), '', NULL, '')
+INSERT INTO sys_menu VALUES (2208, '订单新增', 2202, 2, '', '', '', '', 1, 0, 'F', '0', '0', 'pay:order:add', '#', 'admin', sysdate(), '', NULL, '')
 ON DUPLICATE KEY UPDATE perms = VALUES(perms);
-INSERT INTO sys_menu VALUES (2209, '订单修改', 2202, 3, '', '', '', '', 1, 0, 'F', '0', '0', 'payment:order:edit', '#', 'admin', sysdate(), '', NULL, '')
+INSERT INTO sys_menu VALUES (2209, '订单修改', 2202, 3, '', '', '', '', 1, 0, 'F', '0', '0', 'pay:order:edit', '#', 'admin', sysdate(), '', NULL, '')
 ON DUPLICATE KEY UPDATE perms = VALUES(perms);
-INSERT INTO sys_menu VALUES (2210, '订单删除', 2202, 4, '', '', '', '', 1, 0, 'F', '0', '0', 'payment:order:remove', '#', 'admin', sysdate(), '', NULL, '')
+INSERT INTO sys_menu VALUES (2210, '订单删除', 2202, 4, '', '', '', '', 1, 0, 'F', '0', '0', 'pay:order:remove', '#', 'admin', sysdate(), '', NULL, '')
 ON DUPLICATE KEY UPDATE perms = VALUES(perms);
