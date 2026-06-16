@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+    Provider API模板Mapper XML配置
+
+    功能说明：
+    定义Provider API模板的SQL映射，实现数据库操作。
+
+    @author BigYun
+    @date 2024-05-22
+-->
+<mapper namespace="com.bigyun.provider.mapper.ProviderApiTemplateMapper">
+
+    <!-- 结果映射 -->
+    <resultMap id="ProviderApiTemplateResult" type="com.bigyun.provider.domain.ProviderApiTemplate">
+        <id property="templateId" column="template_id"/>
+        <result property="configType" column="config_type"/>
+        <result property="providerCode" column="provider_code"/>
+        <result property="operation" column="operation"/>
+        <result property="httpMethod" column="http_method"/>
+        <result property="urlTemplate" column="url_template"/>
+        <result property="headersJson" column="headers_json"/>
+        <result property="bodyType" column="body_type"/>
+        <result property="bodyTemplate" column="body_template"/>
+        <result property="responseType" column="response_type"/>
+        <result property="responseMapping" column="response_mapping"/>
+        <result property="authType" column="auth_type"/>
+        <result property="authConfigJson" column="auth_config_json"/>
+        <result property="timeout" column="timeout"/>
+        <result property="retryTimes" column="retry_times"/>
+        <result property="isEnabled" column="is_enabled"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectProviderApiTemplateColumns">
+        template_id, config_type, provider_code, operation, http_method, url_template,
+        headers_json, body_type, body_template, response_type, response_mapping,
+        auth_type, auth_config_json, timeout, retry_times, is_enabled,
+        create_by, create_time, update_by, update_time, remark
+    </sql>
+
+    <!-- 根据配置类型、Provider编码和操作类型查询API模板 -->
+    <select id="selectByConfigAndOperation" resultMap="ProviderApiTemplateResult">
+        SELECT
+        <include refid="selectProviderApiTemplateColumns"/>
+        FROM sys_provider_api_template
+        WHERE config_type = #{configType}
+          AND provider_code = #{providerCode}
+          AND operation = #{operation}
+          AND is_enabled = '1'
+        LIMIT 1
+    </select>
+
+    <!-- 查询指定配置类型和Provider的所有API模板 -->
+    <select id="selectByConfigAndProvider" resultMap="ProviderApiTemplateResult">
+        SELECT
+        <include refid="selectProviderApiTemplateColumns"/>
+        FROM sys_provider_api_template
+        WHERE config_type = #{configType}
+          AND provider_code = #{providerCode}
+        ORDER BY operation
+    </select>
+
+    <!-- 查询启用的API模板列表 -->
+    <select id="selectEnabledTemplates" resultMap="ProviderApiTemplateResult">
+        SELECT
+        <include refid="selectProviderApiTemplateColumns"/>
+        FROM sys_provider_api_template
+        WHERE is_enabled = '1'
+        <if test="configType != null and configType != ''">
+            AND config_type = #{configType}
+        </if>
+        <if test="providerCode != null and providerCode != ''">
+            AND provider_code = #{providerCode}
+        </if>
+        ORDER BY config_type, provider_code, operation
+    </select>
+
+    <!-- 批量插入API模板 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO sys_provider_api_template (
+            config_type, provider_code, operation,
+            http_method, url_template, headers_json, body_type, body_template,
+            response_type, response_mapping,
+            auth_type, auth_config_json,
+            timeout, retry_times, is_enabled,
+            create_by, create_time, remark
+        ) VALUES
+        <foreach collection="templates" item="item" separator=",">
+            (
+                #{item.configType}, #{item.providerCode}, #{item.operation},
+                #{item.httpMethod}, #{item.urlTemplate}, #{item.headersJson}, #{item.bodyType}, #{item.bodyTemplate},
+                #{item.responseType}, #{item.responseMapping},
+                #{item.authType}, #{item.authConfigJson},
+                #{item.timeout}, #{item.retryTimes}, #{item.isEnabled},
+                #{item.createBy}, #{item.createTime}, #{item.remark}
+            )
+        </foreach>
+    </insert>
+
+    <!-- 更新模板的启用状态 -->
+    <update id="updateEnabledStatus">
+        UPDATE sys_provider_api_template
+        SET is_enabled = #{isEnabled},
+            update_time = NOW()
+        WHERE template_id = #{templateId}
+    </update>
+
+</mapper>

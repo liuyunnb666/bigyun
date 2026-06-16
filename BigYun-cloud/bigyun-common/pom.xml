@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.bigyun</groupId>
+        <artifactId>bigyun</artifactId>
+        <version>3.6.8</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <modules>
+        <module>bigyun-common-log</module>
+        <module>bigyun-common-core</module>
+        <module>bigyun-common-mybatis-plus</module>
+        <module>bigyun-common-redis</module>
+        <module>bigyun-common-seata</module>
+        <module>bigyun-common-swagger</module>
+        <module>bigyun-common-security</module>
+        <module>bigyun-common-sensitive</module>
+        <module>bigyun-common-datascope</module>
+        <module>bigyun-common-datasource</module>
+    </modules>
+
+    <artifactId>bigyun-common</artifactId>
+    <packaging>pom</packaging>
+
+    <description>
+        bigyun-common通用模块
+    </description>
+
+</project>

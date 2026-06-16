@@ -1,0 +1,10 @@
+# Tomcat
+server:
+  port: 9200
+
+# Spring
+spring:
+  application:
+    name: bigyun-auth
+  profiles:
+    active: @activatedProfile@

@@ -1,0 +1,10 @@
+# Tomcat
+server:
+  port: 9203
+
+# Spring
+spring:
+  application:
+    name: bigyun-job
+  profiles:
+    active: @activatedProfile@

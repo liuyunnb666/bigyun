@@ -1,0 +1,21 @@
+server:
+  port: 9211
+
+spring:
+  application:
+    name: bigyun-payment
+  profiles:
+    active: @activatedProfile@
+  config:
+    import:
+      - optional:nacos:application-${spring.profiles.active}.yml
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: bigyun-cloud
+      config:
+        server-addr: 127.0.0.1:8848
+        namespace: bigyun-cloud
+        file-extension: yml

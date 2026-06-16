@@ -1,0 +1,2 @@
+com.bigyun.common.log.service.AsyncLogService
+com.bigyun.common.log.aspect.LogAspect

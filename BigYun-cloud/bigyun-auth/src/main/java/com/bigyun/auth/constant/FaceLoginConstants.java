@@ -1,0 +1,60 @@
+package com.bigyun.auth.constant;
+
+public interface FaceLoginConstants
+{
+    String DEFAULT_PROVIDER_CODE = "faceplus";
+
+    String PROVIDER_ALIYUN_FACEBODY = "aliyun-facebody";
+
+    String FACE_TOKEN_KEY_PREFIX = "user:face:token:";
+
+    String FACE_FAIL_COUNT_KEY_PREFIX = "login:face:fail:";
+
+    String FACE_LIVENESS_SESSION_KEY_PREFIX = "login:face:liveness:session:";
+
+    String FACE_LIVENESS_BIZ_KEY_PREFIX = "login:face:liveness:biz:";
+
+    long FACE_TOKEN_TTL_DAYS = 365L;
+
+    int MAX_FAIL_COUNT = 5;
+
+    long FAIL_LOCK_TTL_MINUTES = 30L;
+
+    long LIVENESS_SESSION_TTL_SECONDS = 15 * 60L;
+
+    String LIVENESS_SCENE_ENROLL = "ENROLL";
+
+    String LIVENESS_SCENE_LOGIN = "LOGIN";
+
+    String LIVENESS_STATUS_CREATED = "CREATED";
+
+    String LIVENESS_STATUS_PROCESSING = "PROCESSING";
+
+    String LIVENESS_STATUS_PASS = "PASS";
+
+    String LIVENESS_STATUS_FAIL = "FAIL";
+
+    String LIVENESS_STATUS_CONSUMED = "CONSUMED";
+
+    String LIVENESS_MODE_FACEID_H5 = "FACEID_H5";
+
+    String LIVENESS_MODE_ALIYUN_STATIC = "ALIYUN_STATIC_LIVENESS";
+
+    String LIVENESS_MODE_ALIYUN_VIDEO = "ALIYUN_VIDEO_LIVENESS";
+
+    String LIVENESS_MODE_IMAGE_COMPARE = "IMAGE_COMPARE";
+
+    String LIVENESS_MODE_TEST_IMAGE = "TEST_IMAGE";
+
+    String CLIENT_TYPE_ADMIN = "admin";
+
+    String CLIENT_TYPE_PORTAL = "portal";
+
+    String FACE_LOGIN_MODE_FACEID_H5 = "FACEID_H5";
+
+    String FACE_LOGIN_MODE_ALIYUN_STATIC = "ALIYUN_STATIC_LIVENESS";
+
+    String FACE_LOGIN_MODE_ALIYUN_VIDEO = "ALIYUN_VIDEO_LIVENESS";
+
+    String FACE_LOGIN_MODE_IMAGE_COMPARE = "IMAGE_COMPARE";
+}

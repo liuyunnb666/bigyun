@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bigyun.demo.mapper.DemoItemMapper">
+
+    <resultMap id="DemoItemResult" type="com.bigyun.demo.domain.DemoItem">
+        <id property="itemId" column="item_id"/>
+        <result property="itemCode" column="item_code"/>
+        <result property="itemName" column="item_name"/>
+        <result property="category" column="category"/>
+        <result property="status" column="status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectDemoItemVo">
+        select item_id, item_code, item_name, category, status,
+               create_by, create_time, update_by, update_time, remark
+        from demo_item
+    </sql>
+
+    <select id="selectDemoItemList" parameterType="com.bigyun.demo.domain.DemoItem" resultMap="DemoItemResult">
+        <include refid="selectDemoItemVo"/>
+        <where>
+            <if test="itemCode != null and itemCode != ''">
+                and item_code like concat('%', #{itemCode}, '%')
+            </if>
+            <if test="itemName != null and itemName != ''">
+                and item_name like concat('%', #{itemName}, '%')
+            </if>
+            <if test="category != null and category != ''">
+                and category = #{category}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+        </where>
+        order by item_id desc
+    </select>
+
+    <select id="selectDemoItemById" parameterType="Long" resultMap="DemoItemResult">
+        <include refid="selectDemoItemVo"/>
+        where item_id = #{itemId}
+    </select>
+
+    <select id="selectDemoItemByCode" parameterType="String" resultMap="DemoItemResult">
+        <include refid="selectDemoItemVo"/>
+        where item_code = #{itemCode}
+        limit 1
+    </select>
+
+    <insert id="insertDemoItem" parameterType="com.bigyun.demo.domain.DemoItem" useGeneratedKeys="true" keyProperty="itemId">
+        insert into demo_item (
+            item_code, item_name, category, status, create_by, create_time, remark
+        ) values (
+            #{itemCode}, #{itemName}, #{category}, #{status}, #{createBy}, sysdate(), #{remark}
+        )
+    </insert>
+
+    <update id="updateDemoItem" parameterType="com.bigyun.demo.domain.DemoItem">
+        update demo_item
+        <set>
+            <if test="itemCode != null and itemCode != ''">item_code = #{itemCode},</if>
+            <if test="itemName != null and itemName != ''">item_name = #{itemName},</if>
+            <if test="category != null">category = #{category},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where item_id = #{itemId}
+    </update>
+
+    <delete id="deleteDemoItemById" parameterType="Long">
+        delete from demo_item where item_id = #{itemId}
+    </delete>
+
+    <delete id="deleteDemoItemByIds">
+        delete from demo_item where item_id in
+        <foreach collection="array" item="itemId" open="(" separator="," close=")">
+            #{itemId}
+        </foreach>
+    </delete>
+</mapper>

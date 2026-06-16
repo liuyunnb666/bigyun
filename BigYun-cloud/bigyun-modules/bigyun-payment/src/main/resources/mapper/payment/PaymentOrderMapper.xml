@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bigyun.payment.mapper.PaymentOrderMapper">
+
+    <resultMap id="PaymentOrderResult" type="com.bigyun.payment.domain.PaymentOrder">
+        <id property="orderId" column="order_id"/>
+        <result property="orderNo" column="order_no"/>
+        <result property="businessId" column="business_id"/>
+        <result property="businessType" column="business_type"/>
+        <result property="channelCode" column="channel_code"/>
+        <result property="amount" column="amount"/>
+        <result property="currency" column="currency"/>
+        <result property="payStatus" column="pay_status"/>
+        <result property="tradeNo" column="trade_no"/>
+        <result property="requestSnapshot" column="request_snapshot"/>
+        <result property="responseSnapshot" column="response_snapshot"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectPaymentOrderVo">
+        select order_id, order_no, business_id, business_type, channel_code, amount, currency, pay_status, trade_no,
+               request_snapshot, response_snapshot, create_by, create_time, update_by, update_time, remark
+        from payment_order
+    </sql>
+
+    <select id="selectPaymentOrderList" parameterType="com.bigyun.payment.domain.PaymentOrder" resultMap="PaymentOrderResult">
+        <include refid="selectPaymentOrderVo"/>
+        <where>
+            <if test="orderNo != null and orderNo != ''">
+                and order_no like concat('%', #{orderNo}, '%')
+            </if>
+            <if test="businessType != null and businessType != ''">
+                and business_type = #{businessType}
+            </if>
+            <if test="channelCode != null and channelCode != ''">
+                and channel_code = #{channelCode}
+            </if>
+            <if test="payStatus != null and payStatus != ''">
+                and pay_status = #{payStatus}
+            </if>
+        </where>
+        order by order_id desc
+    </select>
+
+    <select id="selectPaymentOrderById" parameterType="Long" resultMap="PaymentOrderResult">
+        <include refid="selectPaymentOrderVo"/>
+        where order_id = #{orderId}
+    </select>
+
+    <select id="selectPaymentOrderByOrderNo" parameterType="String" resultMap="PaymentOrderResult">
+        <include refid="selectPaymentOrderVo"/>
+        where order_no = #{orderNo}
+        limit 1
+    </select>
+
+    <insert id="insertPaymentOrder" parameterType="com.bigyun.payment.domain.PaymentOrder" useGeneratedKeys="true" keyProperty="orderId">
+        insert into payment_order (
+            order_no, business_id, business_type, channel_code, amount, currency, pay_status, trade_no,
+            request_snapshot, response_snapshot, create_by, create_time, remark
+        ) values (
+            #{orderNo}, #{businessId}, #{businessType}, #{channelCode}, #{amount}, #{currency}, #{payStatus}, #{tradeNo},
+            #{requestSnapshot}, #{responseSnapshot}, #{createBy}, sysdate(), #{remark}
+        )
+    </insert>
+
+    <update id="updatePaymentOrder" parameterType="com.bigyun.payment.domain.PaymentOrder">
+        update payment_order
+        <set>
+            <if test="orderNo != null and orderNo != ''">order_no = #{orderNo},</if>
+            <if test="businessId != null">business_id = #{businessId},</if>
+            <if test="businessType != null and businessType != ''">business_type = #{businessType},</if>
+            <if test="channelCode != null and channelCode != ''">channel_code = #{channelCode},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="currency != null and currency != ''">currency = #{currency},</if>
+            <if test="payStatus != null and payStatus != ''">pay_status = #{payStatus},</if>
+            <if test="tradeNo != null and tradeNo != ''">trade_no = #{tradeNo},</if>
+            <if test="requestSnapshot != null">request_snapshot = #{requestSnapshot},</if>
+            <if test="responseSnapshot != null">response_snapshot = #{responseSnapshot},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where order_id = #{orderId}
+    </update>
+
+    <delete id="deletePaymentOrderById" parameterType="Long">
+        delete from payment_order where order_id = #{orderId}
+    </delete>
+
+    <delete id="deletePaymentOrderByIds">
+        delete from payment_order where order_id in
+        <foreach collection="array" item="orderId" open="(" separator="," close=")">
+            #{orderId}
+        </foreach>
+    </delete>
+</mapper>

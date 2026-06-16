@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.bigyun</groupId>
+        <artifactId>bigyun</artifactId>
+        <version>3.6.8</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <modules>
+        <module>bigyun-config</module>
+        <module>bigyun-system</module>
+        <module>bigyun-gen</module>
+        <module>bigyun-job</module>
+        <module>bigyun-file</module>
+        <module>bigyun-demo</module>
+        <module>bigyun-payment</module>
+    </modules>
+
+    <artifactId>bigyun-modules</artifactId>
+    <packaging>pom</packaging>
+
+    <description>BigYun Cloud business modules</description>
+</project>

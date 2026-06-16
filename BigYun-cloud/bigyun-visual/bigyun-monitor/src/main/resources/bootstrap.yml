@@ -1,0 +1,10 @@
+# Tomcat
+server:
+  port: 9100
+
+# Spring
+spring:
+  application:
+    name: bigyun-monitor
+  profiles:
+    active: @activatedProfile@

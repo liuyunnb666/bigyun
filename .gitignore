@@ -1,0 +1,32 @@
+# Build outputs
+target/
+dist/
+node_modules/
+.vite/
+.cache/
+logs/
+*.log
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Local and private configs
+.mcp.json
+.env
+.env.*
+!.env.example
+application-local.yml
+bootstrap-local.yml
+
+# Test reports
+playwright-report/
+test-results/
+coverage/
+
+# Agent/local indexes
+.codegraph/
+.agents/
+.claude/
+.codex/

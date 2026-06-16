@@ -1,0 +1,4 @@
+com.bigyun.system.factory.RemoteDeptFallbackFactory
+com.bigyun.system.factory.RemoteUserFallbackFactory
+com.bigyun.system.factory.RemoteLogFallbackFactory
+com.bigyun.system.factory.RemoteDeptFallbackFactory

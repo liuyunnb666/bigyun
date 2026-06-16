@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bigyun.payment.mapper.PayDemoMapper">
+
+    <resultMap id="PayChannelConfigResult" type="com.bigyun.payment.domain.PayChannelConfig">
+        <id property="configId" column="config_id"/>
+        <result property="channelCode" column="channel_code"/>
+        <result property="channelName" column="channel_name"/>
+        <result property="appId" column="app_id"/>
+        <result property="merchantId" column="merchant_id"/>
+        <result property="publicKey" column="public_key"/>
+        <result property="privateKey" column="private_key"/>
+        <result property="notifyUrl" column="notify_url"/>
+        <result property="status" column="status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <resultMap id="PayDemoOrderResult" type="com.bigyun.payment.domain.PayDemoOrder">
+        <id property="orderId" column="order_id"/>
+        <result property="orderNo" column="order_no"/>
+        <result property="channelCode" column="channel_code"/>
+        <result property="subject" column="subject"/>
+        <result property="amount" column="amount"/>
+        <result property="orderStatus" column="order_status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectChannelConfigVo">
+        select config_id, channel_code, channel_name, app_id, merchant_id, public_key, private_key, notify_url, status,
+               create_by, create_time, update_by, update_time, remark
+        from pay_channel_config
+    </sql>
+
+    <sql id="selectOrderVo">
+        select order_id, order_no, channel_code, subject, amount, order_status, create_by, create_time, update_by, update_time, remark
+        from pay_demo_order
+    </sql>
+
+    <select id="selectChannelConfigList" parameterType="com.bigyun.payment.domain.PayChannelConfig" resultMap="PayChannelConfigResult">
+        <include refid="selectChannelConfigVo"/>
+        <where>
+            <if test="channelCode != null and channelCode != ''">and channel_code = #{channelCode}</if>
+            <if test="channelName != null and channelName != ''">and channel_name like concat('%', #{channelName}, '%')</if>
+            <if test="status != null and status != ''">and status = #{status}</if>
+        </where>
+        order by config_id desc
+    </select>
+
+    <select id="selectChannelConfigById" parameterType="Long" resultMap="PayChannelConfigResult">
+        <include refid="selectChannelConfigVo"/> where config_id = #{configId}
+    </select>
+
+    <select id="selectChannelConfigByCode" parameterType="String" resultMap="PayChannelConfigResult">
+        <include refid="selectChannelConfigVo"/> where channel_code = #{channelCode} limit 1
+    </select>
+
+    <insert id="insertChannelConfig" parameterType="com.bigyun.payment.domain.PayChannelConfig" useGeneratedKeys="true" keyProperty="configId">
+        insert into pay_channel_config(channel_code, channel_name, app_id, merchant_id, public_key, private_key, notify_url, status, create_by, create_time, remark)
+        values(#{channelCode}, #{channelName}, #{appId}, #{merchantId}, #{publicKey}, #{privateKey}, #{notifyUrl}, #{status}, #{createBy}, sysdate(), #{remark})
+    </insert>
+
+    <update id="updateChannelConfig" parameterType="com.bigyun.payment.domain.PayChannelConfig">
+        update pay_channel_config
+        <set>
+            <if test="channelName != null and channelName != ''">channel_name = #{channelName},</if>
+            <if test="appId != null">app_id = #{appId},</if>
+            <if test="merchantId != null">merchant_id = #{merchantId},</if>
+            <if test="publicKey != null">public_key = #{publicKey},</if>
+            <if test="privateKey != null">private_key = #{privateKey},</if>
+            <if test="notifyUrl != null">notify_url = #{notifyUrl},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_time = sysdate()
+        </set>
+        where config_id = #{configId}
+    </update>
+
+    <delete id="deleteChannelConfigByIds">
+        delete from pay_channel_config where config_id in
+        <foreach item="configId" collection="array" open="(" separator="," close=")">#{configId}</foreach>
+    </delete>
+
+    <select id="selectOrderList" parameterType="com.bigyun.payment.domain.PayDemoOrder" resultMap="PayDemoOrderResult">
+        <include refid="selectOrderVo"/>
+        <where>
+            <if test="orderNo != null and orderNo != ''">and order_no like concat('%', #{orderNo}, '%')</if>
+            <if test="channelCode != null and channelCode != ''">and channel_code = #{channelCode}</if>
+            <if test="orderStatus != null and orderStatus != ''">and order_status = #{orderStatus}</if>
+        </where>
+        order by order_id desc
+    </select>
+
+    <select id="selectOrderByNo" parameterType="String" resultMap="PayDemoOrderResult">
+        <include refid="selectOrderVo"/> where order_no = #{orderNo} limit 1
+    </select>
+
+    <insert id="insertOrder" parameterType="com.bigyun.payment.domain.PayDemoOrder" useGeneratedKeys="true" keyProperty="orderId">
+        insert into pay_demo_order(order_no, channel_code, subject, amount, order_status, create_by, create_time, remark)
+        values(#{orderNo}, #{channelCode}, #{subject}, #{amount}, #{orderStatus}, #{createBy}, sysdate(), #{remark})
+    </insert>
+
+    <update id="updateOrderStatus" parameterType="com.bigyun.payment.domain.PayDemoOrder">
+        update pay_demo_order set order_status = #{orderStatus}, update_time = sysdate() where order_no = #{orderNo}
+    </update>
+</mapper>

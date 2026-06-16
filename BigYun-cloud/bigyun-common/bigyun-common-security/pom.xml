@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.bigyun</groupId>
+        <artifactId>bigyun-common</artifactId>
+        <version>3.6.8</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    
+    <artifactId>bigyun-common-security</artifactId>
+
+    <description>
+        bigyun-common-security安全模块
+    </description>
+
+    <dependencies>
+
+        <!-- Spring Security Crypto (仅加密工具，不带拦截器) -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-crypto</artifactId>
+        </dependency>
+
+        <!-- Spring Security Core (注解: @PreAuthorize, 不带拦截器) -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+        </dependency>
+
+        <!-- Spring Web -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+
+        <!-- Jackson Java Time -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+
+        <!-- BigYun System Remote -->
+        <dependency>
+            <groupId>com.bigyun</groupId>
+            <artifactId>bigyun-system-remote</artifactId>
+        </dependency>
+
+        <!-- BigYun Common Redis-->
+        <dependency>
+            <groupId>com.bigyun</groupId>
+            <artifactId>bigyun-common-redis</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>
