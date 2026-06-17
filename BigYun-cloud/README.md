@@ -4,38 +4,84 @@ BigYun Cloud 后端基于 RuoYi-Cloud 二开整理，保留网关、认证、系
 
 ## 模块说明
 
-- `bigyun-gateway`：统一网关、跨域、限流和路由入口。
-- `bigyun-auth`：认证中心，保留用户名、手机号、邮箱等登录扩展结构。
+- `bigyun-gateway`：统一网关、跨域、鉴权过滤和路由入口。
+- `bigyun-auth`：认证中心，负责验证码、登录、Token 和账号认证。
 - `bigyun-common`：公共工具、权限、安全、日志、数据源、MyBatis-Plus、Swagger/SpringDoc 等基础能力。
-- `bigyun-modules/bigyun-system`：系统管理基础模块。
-- `bigyun-modules/bigyun-config`：Provider 配置中心，负责第三方能力元数据、字段、模板、凭证和运行时路由。
+- `bigyun-modules/bigyun-system`：用户、角色、菜单、字典、参数、公告、日志等系统管理能力。
+- `bigyun-modules/bigyun-config`：Provider 配置中心，负责第三方能力元数据、字段、模板、凭据和运行时路由。
+- `bigyun-modules/bigyun-file`：本地存储和对象存储抽象。
+- `bigyun-modules/bigyun-gen`：代码生成。
+- `bigyun-modules/bigyun-job`：Quartz 定时任务。
 - `bigyun-modules/bigyun-demo`：社区版标准三层示例模块。
 - `bigyun-modules/bigyun-payment`：支付宝、微信支付配置和订单骨架。
 - `bigyun-visual`：监控可视化模块。
 
 ## 本地启动
 
-1. 准备 JDK 17、Maven、MySQL、Redis、Nacos。
-2. 按根目录 `README.md` 顺序导入 `sql` 下的基础脚本。
-3. 将 `sql/nacos` 下模板导入 Nacos，并在本地替换 MySQL、Redis、OSS、Provider 密钥占位符。
-4. 按需启动 `bigyun-gateway`、`bigyun-auth`、`bigyun-system-service`、`bigyun-config-service`、`bigyun-file-service`、`bigyun-job`、`bigyun-demo`、`bigyun-payment`。
+完整步骤见根目录 [Quick Start](../docs/quick-start.md)。后端启动前需要准备：
+
+1. 本机 MySQL 8、Redis、Nacos。
+2. MySQL 默认库 `dy-cloud`，并按顺序导入 `sql` 下的基础脚本。
+3. Nacos namespace `bigyun-cloud`，group `DEFAULT_GROUP`，并导入 `sql/nacos/*.yml`。
+4. 在本地 Nacos 或环境变量中配置 MySQL、Redis、OSS、Provider、支付等占位值。
+
+常用环境变量：
+
+```text
+NACOS_SERVER_ADDR=127.0.0.1:8848
+NACOS_NAMESPACE=bigyun-cloud
+NACOS_GROUP=DEFAULT_GROUP
+MYSQL_HOST=localhost
+MYSQL_PORT=3306
+MYSQL_DATABASE=dy-cloud
+MYSQL_USERNAME=root
+MYSQL_PASSWORD=change_me
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_PASSWORD=
+```
+
+编译：
+
+```bash
+mvn clean compile -DskipTests -Pdev
+```
+
+建议先启动核心服务：
+
+```text
+bigyun-gateway                      8080
+bigyun-auth                         9200
+bigyun-system-service               9201
+bigyun-config-service               9205
+```
+
+扩展服务按需启动：
+
+```text
+bigyun-file-service                 9300
+bigyun-gen                          9202
+bigyun-job                          9203
+bigyun-demo                         9210
+bigyun-payment                      9211
+```
+
+## 二开入口
+
+新增业务模块时优先参考 `bigyun-modules/bigyun-demo`：
+
+- 后端保持 Controller、Service、Mapper、Domain/DTO/VO 分层。
+- 新增表结构、初始化数据、菜单权限和按钮权限 SQL。
+- 需要新路由时调整 Nacos 中的 gateway 配置。
+- 前端新增 API、页面组件和菜单绑定。
+- 交付前执行后端编译和前端构建。
 
 ## 独立运行验收
 
-- 仓库模板默认库名保持 `dy-cloud`，不要为了本地验收修改模板。
-- 本地验收建议创建临时库 `dy-cloud-verify`，并在本机 Nacos 中覆盖数据库名。
-- 本机 Nacos namespace 建议使用 `bigyun-cloud-verify`，group 使用 `DEFAULT_GROUP`。
-- 不要使用远程私有 MCP、远程 MySQL 或远程 Nacos 做社区版写入验收。
-- 完整步骤见根目录 `docs/runtime-verification.md`。
-
-## 编译
-
-```bash
-mvn clean compile -DskipTests
-```
+发布前隔离验收建议使用临时库 `dy-cloud-verify` 和 Nacos namespace `bigyun-cloud-verify`，并通过环境变量或本地 Nacos 配置覆盖默认值。完整清单见 [Runtime Verification Guide](../docs/runtime-verification.md)。
 
 ## 安全约定
 
 - 不提交真实密码、AK/SK、Token、私有 JDBC 地址和公网私有配置。
-- Provider 和 OSS 配置只保留字段结构或示例 endpoint，密钥必须使用占位符。
+- Provider、OSS、支付配置只保留字段结构、占位符或本地测试值。
 - 私有业务模块不进入社区版。

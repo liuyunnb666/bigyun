@@ -1,6 +1,6 @@
 # BigYun Cloud Vue3 管理端
 
-这是 BigYun Cloud 社区版管理端，基于 Vue3、Vite、Pinia 和 Element Plus。社区版首页、Provider 配置中心、支付骨架和 demo 模块已按二开框架口径整理。
+这是 BigYun Cloud 社区版管理端，基于 Vue3、Vite、Pinia 和 Element Plus。管理端通过 `/dev-api` 代理到后端 gateway，默认 gateway 地址为 `http://localhost:8080`。
 
 ## 主要页面
 
@@ -13,12 +13,26 @@
 
 ## 本地运行
 
+先确认后端 gateway、auth、system、config 已启动，并且 gateway 可访问 `http://localhost:8080`。
+
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-运行态验收时，后端建议连接本机临时库 `dy-cloud-verify` 和 Nacos namespace `bigyun-cloud-verify`。确认后端 gateway、auth、system、config、demo、payment 可用后，再使用初始化账号 `admin/admin123` 登录并检查首页、系统管理、Swagger/SpringDoc、Provider 配置中心、支付骨架和 Demo 模块。
+默认访问地址：
+
+```text
+http://localhost:8081
+```
+
+初始化账号：
+
+```text
+admin/admin123
+```
+
+登录后建议检查首页、系统管理、Swagger/SpringDoc、Provider 配置中心、支付骨架和 Demo 模块。
 
 ## 生产构建
 

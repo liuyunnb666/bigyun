@@ -63,7 +63,7 @@ CREATE DATABASE `dy-cloud-verify` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_
 前端在 `BigYun-cloud-Vue3` 下启动：
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 

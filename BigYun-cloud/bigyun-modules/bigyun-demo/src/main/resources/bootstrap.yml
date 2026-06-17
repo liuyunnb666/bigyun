@@ -13,9 +13,11 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
-        namespace: bigyun-cloud
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+        namespace: ${NACOS_NAMESPACE:bigyun-cloud}
+        group: ${NACOS_GROUP:DEFAULT_GROUP}
       config:
-        server-addr: 127.0.0.1:8848
-        namespace: bigyun-cloud
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+        namespace: ${NACOS_NAMESPACE:bigyun-cloud}
+        group: ${NACOS_GROUP:DEFAULT_GROUP}
         file-extension: yml
